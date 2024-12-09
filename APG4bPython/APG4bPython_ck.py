@@ -1,0 +1,5 @@
+N=input()
+T=list(map(int,input().split()))
+m=min(T)
+X=T.index(m)
+print(X+1)
