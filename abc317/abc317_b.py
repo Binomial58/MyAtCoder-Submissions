@@ -1,0 +1,5 @@
+N=int(input())
+A=list(map(int, input().split()))
+a=min(A)
+S=(N+1)*(2*a+N)//2-sum(A)
+print(S)
