@@ -1,23 +1,11 @@
-S = input()
-A = list(S)
-N = len(S)
-
-# 奇数長の場合は即座にNoを出力
-if N % 2 == 1:
+S=input()
+R=set()
+if len(S)%2==1:
     print("No")
 else:
-    # 隣接する要素が異なるかチェック
-    for i in range(0, N, 2):
-        if A[i] == A[i + 1]:
-            continue
-        else:
+    for i in range(len(S)//2):
+        if S[2*i]!=S[2*i+1] or S[2*i]in R:
             print("No")
             exit()
-    # 重複するペアがないかチェック
-    for j in range(0, N, 2):
-        for k in range(j + 2, N, 2):
-            if A[j] == A[k]:
-                print("No")
-                exit()
-    # すべての条件を満たした場合
+        R.add(S[2*i])
     print("Yes")
