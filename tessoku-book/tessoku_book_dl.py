@@ -1,14 +1,14 @@
+import heapq
+r=0
+L=[]
 n,d=map(int, input().split())
-Y=[[] for i in range(d)]
-C=[]
-count=0
+X=[[] for i in range(d)]
 for i in range(n):
     x,y=map(int, input().split())
-    Y[x-1].append(y)
-for i in range(d):
-    for j in Y[i]:
-        C.append(j)
-    C.sort()
-    if len(C)!=0:
-        count+=C.pop(-1)
-print(count)
+    X[x-1].append(-y)
+for j in range(d):
+    for k in X[j]:
+        heapq.heappush(L,k)
+    if len(L)>0:
+        r-=heapq.heappop(L)
+print(r)
