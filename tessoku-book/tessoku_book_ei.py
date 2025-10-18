@@ -12,7 +12,7 @@ L=deque()
 L.append(0)
 a=-1
 while a!=n-1:
-    a=L.popleft()
+    a=L.pop()
     done[a]=1
     for b in E[a]:
         if done[b]==-1:

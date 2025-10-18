@@ -10,7 +10,7 @@ for i in range(m):
     E[a-1].append(b-1)
     E[b-1].append(a-1)
 while len(L)!=0:
-    a=L.popleft()
+    a=L.pop()
     done[a]=1
     for b in E[a]:
         if done[b]==-1:
