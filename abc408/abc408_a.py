@@ -1,11 +1,10 @@
-N,S=map(int, input().split())
-T=[0]+list(map(int, input().split()))
-t=S
-for i in range(1,N+1):
-    t-=T[i]-T[i-1]
-    if t<0:
+n, s = map(int, input().split())
+T = list(map(int, input().split()))
+now = s
+for i in range(n):
+    if now >= T[i]:
+        now = T[i] + s
+    else:
         print("No")
         exit()
-    else:
-        t=S
 print("Yes")

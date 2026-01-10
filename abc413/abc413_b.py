@@ -1,11 +1,10 @@
-N=int(input())
-S=[]
-T=set()
-for s in range(N):
-    s=input()
-    S.append(s)
-for i in range(N):
-    for j in range(N):
-        if i!=j:
-            T.add(S[i]+S[j])
-print(len(T))
+n = int(input())
+S = []
+R = set()
+for i in range(n):
+    S.append(input())
+for i in range(n):
+    for j in range(n):
+        if i != j:
+            R.add(S[i] + S[j])
+print(len(R))

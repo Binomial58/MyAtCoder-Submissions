@@ -1,12 +1,13 @@
-N=int(input())
-S=0
-D=0
-for _ in range(N):
-    s=input()
-    if s=="login":
-        D=1
-    elif s=="logout":
-        D=0
-    elif s=="private" and D==0:
-        S+=1
-print(S)
+n = int(input())
+count = 0
+login = False
+for i in range(n):
+    s = input()
+    # print(s, login)
+    if s == "login":
+        login = True
+    elif s == "logout":
+        login = False
+    elif s == "private" and not login:
+        count += 1
+print(count)

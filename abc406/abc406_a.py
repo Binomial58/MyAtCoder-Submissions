@@ -1,10 +1,10 @@
-A,B,C,D=map(int, input().split())
-if A>C:
-    print("Yes")
-elif A<C:
+a, b, c, d = map(int, input().split())
+if a < c:
     print("No")
+elif a > c:
+    print("Yes")
 else:
-    if B>D:
+    if b > d:
         print("Yes")
     else:
         print("No")

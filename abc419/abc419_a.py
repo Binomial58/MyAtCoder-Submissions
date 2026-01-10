@@ -1,7 +1,7 @@
-s=input()
-S=["red","blue","green"]
-T=["SSS","FFF","MMM"]
-if s in S:
-    print(T[S.index(s)])
+s = input()
+A = ["red", "blue", "green"]
+B = ["SSS", "FFF", "MMM"]
+if s in A:
+    print(B[A.index(s)])
 else:
     print("Unknown")

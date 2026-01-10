@@ -1,5 +1,5 @@
-n=int(input())
-s=0
-for i in range(n):
-    s+=(-1)**(i+1)*(i+1)**3
-print(s)
+n = int(input())
+count = 0
+for i in range(1, n + 1):
+    count += (-1) ** i * i**3
+print(count)

@@ -1,12 +1,14 @@
-import collections
-N=int(input())
-A=list(map(int, input().split()))
-B=collections.Counter(A)
-M=0
-for a in A:
-    if B[a]==1:
-        M=max(M,a)
-if M==0:
-    print(-1)
-else:
-    print(A.index(M)+1)
+from collections import Counter
+
+n = int(input())
+A = list(map(int, input().split()))
+C = Counter(A)
+ans = -1
+maxn = 0
+for i in range(n):
+    a = A[i]
+    if C[a] == 1:
+        maxn = max(maxn, A[i])
+        if maxn == A[i]:
+            ans = i + 1
+print(ans)

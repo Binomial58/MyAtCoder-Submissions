@@ -1,15 +1,13 @@
-import collections
-n=int(input())
-A=list(map(int, input().split()))
-J=[]
-I=[]
-c=0
-for j in range(1,n+1):
-    J.append(j-A[j-1])
-    I.append(j+A[j-1])
-J2=collections.Counter(J)
-I2=collections.Counter(I)
-K=set(J)&set(I)
-for k in K:
-    c+=J2[k]*I2[k]
-print(c)
+from collections import Counter
+
+n = int(input())
+A = list(map(int, input().split()))
+J = [j + 1 - A[j] for j in range(n)]
+I = [i + 1 + A[i] for i in range(n)]
+Jc = Counter(J)
+Ic = Counter(I)
+count = 0
+for i in Ic:
+    if i in Jc:
+        count += Ic[i] * Jc[i]
+print(count)

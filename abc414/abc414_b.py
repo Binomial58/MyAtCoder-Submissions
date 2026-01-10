@@ -1,19 +1,15 @@
-n=int(input())
-s=""
-a=0
-C=[]
-L=[]
+n = int(input())
+R = []
+now = 0
+L = []
 for i in range(n):
-    c,l=map(str, input().split())
-    C.append(c)
-    L.append(int(l))
+    c, l = map(str, input().split())
+    L.append([c, int(l)])
 for i in range(n):
-    if L[i]>100:
+    now += L[i][1]
+    if now > 100:
         print("Too Long")
         exit()
-    s+=C[i]*L[i]
-    a+=L[i]
-if a>100:
-    print("Too Long")
-else:
-    print(s)
+    for j in range(L[i][1]):
+        R.append(L[i][0])
+print("".join(R))

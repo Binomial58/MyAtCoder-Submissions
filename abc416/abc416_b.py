@@ -1,13 +1,13 @@
-s=input()
-t=""
-c=0
+s = input()
+T = []
+flag = True
 for i in range(len(s)):
-    if s[i]=="#":
-        t+="#"
-        c=0
-    elif c==0:
-        t+="o"
-        c=1
+    if s[i] == "#":
+        T.append("#")
+        flag = True
+    elif flag:
+        T.append("o")
+        flag = False
     else:
-        t+="."
-print(t)
+        T.append(".")
+print("".join(T))

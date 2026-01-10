@@ -1,8 +1,8 @@
-N=int(input())
-T=input()
-A=input()
-for i in range(N):
-    if T[i]=="o" and A[i]=="o":
+n = int(input())
+t = input()
+a = input()
+for i in range(n):
+    if t[i] == "o" and a[i] == "o":
         print("Yes")
         exit()
 print("No")

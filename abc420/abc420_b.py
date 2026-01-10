@@ -1,36 +1,30 @@
-n,m=map(int, input().split())
-S=[]
-M=[]
-R=[]
-T=[]
+n, m = map(int, input().split())
+R = [0 for i in range(n)]
+S = []
 for i in range(n):
-    s=input()
-    S.append(s)
-for j in range(m):
-    zero=0
-    one=0
-    for i in range(n):
-        if S[i][j]=="1":
-            one+=1
+    S.append(input())
+for i in range(m):
+    zero = 0
+    one = 0
+    for j in range(n):
+        if S[j][i] == "1":
+            one += 1
         else:
-            zero+=1
-    if one==n or zero==n:
-        M.append("2")
+            zero += 1
+    # print(zero, one)
+    if one == n or zero == n:
+        for j in range(n):
+            R[j] += 1
+    elif one > zero:
+        for j in range(n):
+            if S[j][i] == "0":
+                R[j] += 1
     else:
-        if one>zero:
-            M.append("0")
-        else:
-            M.append("1")
+        for j in range(n):
+            if S[j][i] == "1":
+                R[j] += 1
+T = []
 for j in range(n):
-    c=0
-    for i in range(m):
-        if M[i]=="2":
-            c+=1
-        elif S[j][i]==M[i]:
-            c+=1
-    R.append(c)
-maxR=max(R)
-for i in range(n):
-    if R[i]==maxR:
-        T.append(i+1)
+    if R[j] == max(R):
+        T.append(j + 1)
 print(*T)

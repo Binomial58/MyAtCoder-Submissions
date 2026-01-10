@@ -1,6 +1,6 @@
-P=input()
-L=int(input())
-if len(P)>=L:
+p = input()
+l = int(input())
+if len(p) >= l:
     print("Yes")
 else:
     print("No")

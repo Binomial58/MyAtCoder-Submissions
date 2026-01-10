@@ -1,13 +1,14 @@
-q=int(input())
-T=[]
-R=[]
+import heapq
+
+q = int(input())
+R = []
+S = []
+heapq.heapify(S)
 for i in range(q):
-    l=list(map(str, input().split()))
-    if l[0]=="1":
-        T.append(int(l[1]))
-        T.sort()
+    query = list(map(int, input().split()))
+    if query[0] == 1:
+        heapq.heappush(S, query[1])
     else:
-        R.append(T[0])
-        T.pop(0)
+        R.append(heapq.heappop(S))
 for r in R:
     print(r)

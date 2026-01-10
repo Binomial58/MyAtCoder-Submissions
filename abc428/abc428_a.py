@@ -1,6 +1,10 @@
-s,a,b,x=map(int, input().split())
-t=0
-for i in range(1,x+1):
-    if 0<i%(a+b)<=a:
-        t+=s
-print(t)
+s, a, b, x = map(int, input().split())
+now = 0
+run = 0
+for t in range(x):
+    if now <= a - 1:
+        run += s
+    now += 1
+    if now == a + b:
+        now = 0
+print(run)

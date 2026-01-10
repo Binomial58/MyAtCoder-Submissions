@@ -1,22 +1,25 @@
-N,Q=map(int, input().split())
-H=[1 for i in range(N)]
-V=[i for i in range(N)]
-R=[]
-C=0
-for i in range(Q):
-    q=list(map(int, input().split()))
-    if q[0]==1:
-        a=q[1]-1 #移動する鳩の番号
-        b=q[2]-1 #移動先の巣の番号
-        c=V[a] #移動する鳩がいる巣の番号
-        H[b]+=1
-        H[c]-=1
-        V[a]=b
-        if H[b]==2:
-            C+=1
-        if H[c]==1:
-            C-=1
+n, q = map(int, input().split())
+now = 0
+R = []
+H = [1 for i in range(n)]
+P = dict()
+for i in range(n):
+    P[i] = i
+for i in range(q):
+    query = list(map(int, input().split()))
+    if query[0] == 1:
+        p = query[1] - 1
+        h = query[2] - 1
+        H[P[p]] -= 1
+        if H[P[p]] == 1:
+            now -= 1
+        P[p] = h
+        H[P[p]] += 1
+        if H[P[p]] == 2:
+            now += 1
     else:
-        R.append(C)
-for c in R:
-    print(c)
+        R.append(now)
+# print(H)
+# print(P)
+for r in R:
+    print(r)

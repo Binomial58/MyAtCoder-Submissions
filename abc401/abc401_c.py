@@ -1,8 +1,12 @@
-n,k=map(int, input().split())
-A=[1 for i in range(n+1)]
-s=k
-for i in range(k,n+1):
-    A[i]=s%10**9
-    s+=A[i]
-    s-=A[i-k]
-print(A[-1])
+n, k = map(int, input().split())
+F = [1] * k
+if n < k:
+    print(1)
+    exit()
+F.append(k)
+s = k
+for i in range(n - k):
+    s = s + F[-1] - F[i]
+    s %= 10**9
+    F.append(s)
+print(F[-1])

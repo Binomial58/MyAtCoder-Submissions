@@ -1,9 +1,9 @@
-N,S,K=map(int, input().split())
-R=0
-for _ in range(N):
-    P,Q=map(int, input().split())
-    R+=P*Q
-if R>=S:
-    print(R)
+n, s, k = map(int, input().split())
+count = 0
+for i in range(n):
+    p, q = map(int, input().split())
+    count += p * q
+if count >= s:
+    print(count)
 else:
-    print(R+K)
+    print(count + k)

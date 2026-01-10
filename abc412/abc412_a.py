@@ -1,7 +1,7 @@
-N=int(input())
-c=0
-for i in range(N):
-    a,b=map(int, input().split())
-    if b>a:
-        c+=1
-print(c)
+n = int(input())
+count = 0
+for i in range(n):
+    a, b = map(int, input().split())
+    if b > a:
+        count += 1
+print(count)

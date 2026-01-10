@@ -1,16 +1,11 @@
-def Chebyshev(x1, y1, x2, y2):
-    return max(abs(x1 - x2), abs(y1 - y2))
-
-
 n = int(input())
-R = []
-C = []
+G = [[], []]
 for i in range(n):
     r, c = map(int, input().split())
-    R.append(r)
-    C.append(c)
-d = max(max(R) - min(R), max(C) - min(C))
-if d % 2 == 0:
-    print(d // 2)
+    G[0].append(r)
+    G[1].append(c)
+g = max(max(G[0]) - min(G[0]), max(G[1]) - min(G[1]))
+if g % 2 == 0:
+    print(g // 2)
 else:
-    print(d // 2 + 1)
+    print(g // 2 + 1)

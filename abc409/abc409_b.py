@@ -1,11 +1,18 @@
-N=int(input())
-A=list(map(int, input().split()))
-m=N
-for i in range(N+1):
-    s=0
-    for j in range(N):
-        if A[j]>=i:
-            s+=1
-    if s>=i:
-        m=i
-print(m)
+import bisect
+
+n = int(input())
+A = list(map(int, input().split()))
+left = 0
+right = 10**10
+while left < right:
+    mid = (left + right) // 2
+    count = 0
+    for a in A:
+        if a >= mid:
+            count += 1
+    if count >= mid:
+        left = mid + 1
+    else:
+        right = mid
+    # print(left, right)
+print(left - 1)

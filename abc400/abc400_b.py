@@ -1,8 +1,8 @@
-N,M=map(int, input().split())
-X=0
-for i in range(M+1):
-    X+=N**(i)
-if X<=10**9:
-    print(X)
-else:
-    print("inf")
+n, m = map(int, input().split())
+count = 0
+for i in range(m + 1):
+    count += n**i
+    if count > 10**9:
+        print("inf")
+        exit()
+print(count)

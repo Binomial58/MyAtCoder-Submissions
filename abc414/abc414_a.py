@@ -1,7 +1,7 @@
-n,l,r=map(int, input().split())
-c=0
+n, l, r = map(int, input().split())
+count = 0
 for i in range(n):
-    x,y=map(int, input().split())
-    if x<=l and r<=y:
-        c+=1
-print(c)
+    x, y = map(int, input().split())
+    if x <= l and r <= y:
+        count += 1
+print(count)

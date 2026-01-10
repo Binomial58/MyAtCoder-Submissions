@@ -1,12 +1,13 @@
-Q=int(input())
-S=[]
-U=[]
-for q in range(Q):
-    T=list(map(int, input().split()))
-    if T[0]==1:
-        S.append(T[1])
+from collections import deque
+
+q = int(input())
+Q = deque()
+R = []
+for i in range(q):
+    query = list(map(int, input().split()))
+    if query[0] == 1:
+        Q.append(query[1])
     else:
-        U.append(S[0])
-        S=S[1:]
-for u in U:
-    print(u) 
+        R.append(Q.popleft())
+for r in R:
+    print(r)

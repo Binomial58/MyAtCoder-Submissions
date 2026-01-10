@@ -1,26 +1,15 @@
-S=input()
-T=""
-countW=0
-R=False
-if S.count("WA")==0:
-    print(S)
-    exit()
-for i in range(len(S)):
-    if R and S[i]=="A":
-        T+="A"
-        for k in range(countW):
-            T+="C"
-        countW=0
-        R=False
-    elif S[i]!="W":
-        for k in range(countW):
-            T+="W"
-        T+=S[i]
-        R=False
-        countW=0
-    elif S[i]=="W":
-        countW+=1
-        R=True
-for k in range(countW):
-    T+="W"
-print(T)
+from collections import deque
+
+S = input()
+Q = deque()
+S = S[::-1]
+for s in S:
+    if len(Q) != 0 and s == "W" and Q[-1] == "A":
+        Q.pop()
+        Q.append("C")
+        Q.append("A")
+    else:
+        Q.append(s)
+Q = list(Q)
+Q = Q[::-1]
+print("".join(Q))

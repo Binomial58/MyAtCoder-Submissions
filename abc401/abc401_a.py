@@ -1,5 +1,5 @@
-S=int(input())
-if 200<=S<=299:
+s = int(input())
+if 200 <= s <= 299:
     print("Success")
 else:
     print("Failure")

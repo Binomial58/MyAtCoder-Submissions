@@ -1,11 +1,8 @@
-N=int(input())
-D=list(map(int, input().split()))
-R=[0]
-for i in range(N-1):
-    R.append(R[-1]+D[i])
-for i in range(N-1):
-    E=[]
-    for j in range(N):
-        if j>i:
-            E.append(R[j]-R[i])
-    print(*E)
+n = int(input())
+D = list(map(int, input().split()))
+for i in range(n - 1):
+    R = [D[i] for i in range(i, n - 1)]
+    Rs = [R[0]]
+    for j in range(len(R) - 1):
+        Rs.append(Rs[-1] + R[j + 1])
+    print(*Rs)

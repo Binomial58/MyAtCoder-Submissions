@@ -1,3 +1,2 @@
-s=input()
-n=(len(s)+1)//2-1
-print(s[:n]+s[n+1:])
+s = input()
+print(s[: len(s) // 2] + s[len(s) // 2 + 1 :])

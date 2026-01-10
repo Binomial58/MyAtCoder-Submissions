@@ -1,3 +1,2 @@
-S=input()
-c=S.count("2")
-print("2"*c)
+s = input()
+print("2" * (s.count("2")))

@@ -1,9 +1,6 @@
-s=input()
-S=set()
-for i in s:
-    S.add(i)
-S=list(S)
-if s.count(S[0])==1:
-    print(S[0])
-else:
-    print(S[1])
+s = list(input())
+S = set(s)
+for t in S:
+    if s.count(t) == 1:
+        print(t)
+        exit()
