@@ -1,0 +1,280 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+using ll = long long;
+using u32 = uint32_t;
+using u64 = uint64_t;
+
+#define rep0(i, n) for (int i = 0; i < (int)(n); ++i)
+#define rep(i, a, b) for (int i = (int)(a); i < (int)(b); i++)
+#define rrep(i, a, b) for (int i = (int)(a); i >= (int)(b); i--)
+
+namespace fastio
+{
+    // 入力
+    template <class T>
+    void read(T &x) { cin >> x; }
+
+    template <class A, class B>
+    void read(pair<A, B> &p)
+    {
+        read(p.first);
+        read(p.second);
+    }
+
+    template <size_t I = 0, class... Ts>
+    inline enable_if_t<I == sizeof...(Ts)> read_tuple(tuple<Ts...> &) {}
+    template <size_t I = 0, class... Ts>
+        inline enable_if_t < I<sizeof...(Ts)> read_tuple(tuple<Ts...> &t)
+    {
+        read(get<I>(t));
+        read_tuple<I + 1>(t);
+    }
+    template <class... Ts>
+    void read(tuple<Ts...> &t) { read_tuple(t); }
+
+    template <class T, size_t N>
+    void read(array<T, N> &a)
+    {
+        for (auto &x : a)
+            read(x);
+    }
+    template <class T>
+    void read(vector<T> &v)
+    {
+        for (auto &x : v)
+            read(x);
+    }
+    template <class T>
+    void read(deque<T> &v)
+    {
+        for (auto &x : v)
+            read(x);
+    }
+
+    template <class Head, class... Tail>
+    void read(Head &head, Tail &...tail)
+    {
+        read(head);
+        if constexpr (sizeof...(Tail))
+            read(tail...);
+    }
+
+    // 基本型
+    template <class T>
+    void wt(const T &x) { cout << x; }
+
+    // 文字列系
+    inline void wt(const char *s) { cout << s; }
+    inline void wt(const string &s) { cout << s; }
+
+    // pair
+    template <class A, class B>
+    void wt(const pair<A, B> &p)
+    {
+        wt(p.first);
+        cout << ' ';
+        wt(p.second);
+    }
+
+    // tuple
+    template <size_t I = 0, class... Ts>
+    inline enable_if_t<I == sizeof...(Ts)> wt_tuple(const tuple<Ts...> &) {}
+    template <size_t I = 0, class... Ts>
+        inline enable_if_t < I<sizeof...(Ts)> wt_tuple(const tuple<Ts...> &t)
+    {
+        if (I)
+            cout << ' ';
+        wt(get<I>(t));
+        wt_tuple<I + 1>(t);
+    }
+    template <class... Ts>
+    void wt(const tuple<Ts...> &t) { wt_tuple(t); }
+
+    // array / vector / deque
+    template <class T, size_t N>
+    void wt(const array<T, N> &a)
+    {
+        for (size_t i = 0; i < N; i++)
+        {
+            if (i)
+                cout << ' ';
+            wt(a[i]);
+        }
+    }
+    template <class T>
+    void wt(const vector<T> &v)
+    {
+        for (size_t i = 0; i < v.size(); i++)
+        {
+            if (i)
+                cout << ' ';
+            wt(v[i]);
+        }
+    }
+    template <class T>
+    void wt(const deque<T> &v)
+    {
+        for (size_t i = 0; i < v.size(); i++)
+        {
+            if (i)
+                cout << ' ';
+            wt(v[i]);
+        }
+    }
+
+    // set / multiset / unordered_set
+    template <class T>
+    void wt(const set<T> &s)
+    {
+        bool first = true;
+        for (auto &x : s)
+        {
+            if (!first)
+                cout << ' ';
+            first = false;
+            wt(x);
+        }
+    }
+    template <class T>
+    void wt(const multiset<T> &s)
+    {
+        bool first = true;
+        for (auto &x : s)
+        {
+            if (!first)
+                cout << ' ';
+            first = false;
+            wt(x);
+        }
+    }
+    template <class T>
+    void wt(const unordered_set<T> &s)
+    {
+        bool first = true;
+        for (auto &x : s)
+        {
+            if (!first)
+                cout << ' ';
+            first = false;
+            wt(x);
+        }
+    }
+
+    // map / unordered_map
+    template <class K, class V>
+    void wt(const map<K, V> &m)
+    {
+        bool first = true;
+        for (auto &kv : m)
+        {
+            if (!first)
+                cout << " | ";
+            first = false;
+            wt(kv.first);
+            cout << ':';
+            wt(kv.second);
+        }
+    }
+    template <class K, class V>
+    void wt(const unordered_map<K, V> &m)
+    {
+        bool first = true;
+        for (auto &kv : m)
+        {
+            if (!first)
+                cout << " | ";
+            first = false;
+            wt(kv.first);
+            cout << ':';
+            wt(kv.second);
+        }
+    }
+
+    // 出力本体
+    void print() { cout << '\n'; }
+
+    template <class Head, class... Tail>
+    void print(const Head &head, const Tail &...tail)
+    {
+        wt(head);
+        if (sizeof...(Tail))
+            cout << ' ';
+        print(tail...);
+    }
+} // namespace fastio
+
+using fastio::print;
+using fastio::read;
+
+#define INT(...)     \
+    int __VA_ARGS__; \
+    read(__VA_ARGS__)
+#define LL(...)     \
+    ll __VA_ARGS__; \
+    read(__VA_ARGS__)
+#define U32(...)     \
+    u32 __VA_ARGS__; \
+    read(__VA_ARGS__)
+#define U64(...)     \
+    u64 __VA_ARGS__; \
+    read(__VA_ARGS__)
+#define STR(...)        \
+    string __VA_ARGS__; \
+    read(__VA_ARGS__)
+#define CHAR(...)     \
+    char __VA_ARGS__; \
+    read(__VA_ARGS__)
+#define DBL(...)        \
+    double __VA_ARGS__; \
+    read(__VA_ARGS__)
+#define VEC(type, name, size) \
+    vector<type> name(size);  \
+    read(name)
+#define VV(type, name, h, w)                       \
+    vector<vector<type>> name(h, vector<type>(w)); \
+    read(name)
+
+template <class T>
+int bisect_left(const vector<T> &v, const T &x)
+{
+    return int(lower_bound(v.begin(), v.end(), x) - v.begin());
+}
+
+template <class T>
+int bisect_right(const vector<T> &v, const T &x)
+{
+    return int(upper_bound(v.begin(), v.end(), x) - v.begin());
+}
+
+template <class T>
+long long sum(const vector<T> &v)
+{
+    return accumulate(v.begin(), v.end(), 0LL);
+}
+
+int main()
+{
+    // ここにコードを書く
+    INT(n, x);
+    vector<ll> A(n);
+    vector<ll> B(n);
+    rep0(i, n)
+    {
+        read(A[i], B[i]);
+    }
+    // print(A);
+    // print(B);
+    // 各ステージをプレイするまでにかかる時間
+    vector<ll> T(n);
+    rep(i, 1, n)
+    {
+        T[i] = T[i - 1] + A[i - 1] + B[i - 1];
+    }
+    ll time = T[0] + A[0] + B[0] * x;
+    rep(i, 1, min(n, x))
+    {
+        time = min(time, T[i] + A[i] + B[i] * (x - i));
+    }
+    print(time);
+}
