@@ -1,0 +1,744 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+using ll = long long;
+using u32 = uint32_t;
+using u64 = uint64_t;
+
+// for文の短縮マクロ
+#define rep0(i, n) for (int i = 0; i < (int)(n); ++i)
+#define rep(i, a, b) for (int i = (int)(a); i < (int)(b); i++)
+#define rrep(i, a, b) for (int i = (int)(a); i > (int)(b); --i)
+#define srep(i, a, b, step) \
+    for (long long i = (a); (step) > 0 ? i < (b) : i > (b); i += (step))
+
+// コンテナ操作の短縮マクロ
+#define all(v) (v).begin(), (v).end()
+#define MIN(v) *min_element(all(v))
+#define MAX(v) *max_element(all(v))
+
+// よく使う定数
+const int INF = (1 << 30);
+const ll INFLL = (1LL << 62);
+const ll MOD = 998244353;
+const ll MOD2 = 1000000007;
+
+// 型ごとにread/printを拡張した入出力ヘルパー
+namespace fastio
+{
+    // 入力
+    template <class T>
+    void read(T &x) { cin >> x; }
+
+    template <class A, class B>
+    void read(pair<A, B> &p)
+    {
+        read(p.first);
+        read(p.second);
+    }
+
+    template <size_t I = 0, class... Ts>
+    inline enable_if_t<I == sizeof...(Ts)> read_tuple(tuple<Ts...> &) {}
+    template <size_t I = 0, class... Ts>
+        inline enable_if_t < I<sizeof...(Ts)> read_tuple(tuple<Ts...> &t)
+    {
+        read(get<I>(t));
+        read_tuple<I + 1>(t);
+    }
+    template <class... Ts>
+    void read(tuple<Ts...> &t) { read_tuple(t); }
+
+    template <class T, size_t N>
+    void read(array<T, N> &a)
+    {
+        for (auto &x : a)
+            read(x);
+    }
+    template <class T>
+    void read(vector<T> &v)
+    {
+        for (auto &x : v)
+            read(x);
+    }
+    template <class T>
+    void read(deque<T> &v)
+    {
+        for (auto &x : v)
+            read(x);
+    }
+
+    template <class Head, class... Tail>
+    void read(Head &head, Tail &...tail)
+    {
+        read(head);
+        if constexpr (sizeof...(Tail))
+            read(tail...);
+    }
+
+    // 基本型
+    template <class T>
+    void wt(const T &x) { cout << x; }
+
+    // 小数は小数点以下10桁で固定出力
+    inline void wt(float x) { cout << fixed << setprecision(10) << x; }
+    inline void wt(double x) { cout << fixed << setprecision(10) << x; }
+    inline void wt(long double x) { cout << fixed << setprecision(10) << x; }
+
+    // 文字列系
+    inline void wt(const char *s) { cout << s; }
+    inline void wt(const string &s) { cout << s; }
+
+    // pair
+    template <class A, class B>
+    void wt(const pair<A, B> &p)
+    {
+        wt(p.first);
+        cout << ' ';
+        wt(p.second);
+    }
+
+    // tuple
+    template <size_t I = 0, class... Ts>
+    inline enable_if_t<I == sizeof...(Ts)> wt_tuple(const tuple<Ts...> &) {}
+    template <size_t I = 0, class... Ts>
+        inline enable_if_t < I<sizeof...(Ts)> wt_tuple(const tuple<Ts...> &t)
+    {
+        if (I)
+            cout << ' ';
+        wt(get<I>(t));
+        wt_tuple<I + 1>(t);
+    }
+    template <class... Ts>
+    void wt(const tuple<Ts...> &t) { wt_tuple(t); }
+
+    // コンテナ内要素を再帰的に出力するための前方宣言
+    template <class T>
+    void wt(const set<T> &s);
+    template <class T>
+    void wt(const multiset<T> &s);
+    template <class T>
+    void wt(const unordered_set<T> &s);
+    template <class K, class V>
+    void wt(const map<K, V> &m);
+    template <class K, class V>
+    void wt(const unordered_map<K, V> &m);
+    template <class T, class Container, class Compare>
+    void wt(const priority_queue<T, Container, Compare> &q);
+
+    // array / vector / deque
+    template <class T, size_t N>
+    void wt(const array<T, N> &a)
+    {
+        for (size_t i = 0; i < N; i++)
+        {
+            if (i)
+                cout << ' ';
+            wt(a[i]);
+        }
+    }
+    template <class T>
+    void wt(const vector<T> &v)
+    {
+        for (size_t i = 0; i < v.size(); i++)
+        {
+            if (i)
+                cout << ' ';
+            wt(v[i]);
+        }
+    }
+    template <class T>
+    void wt(const vector<vector<T>> &v)
+    {
+        for (size_t i = 0; i < v.size(); i++)
+        {
+            if (i)
+                cout << '\n';
+            wt(v[i]);
+        }
+    }
+    template <class T>
+    void wt(const deque<T> &v)
+    {
+        for (size_t i = 0; i < v.size(); i++)
+        {
+            if (i)
+                cout << ' ';
+            wt(v[i]);
+        }
+    }
+    template <class T, class Container, class Compare>
+    void wt(const priority_queue<T, Container, Compare> &q)
+    {
+        auto qq = q;
+        bool first = true;
+        while (!qq.empty())
+        {
+            if (!first)
+                cout << ' ';
+            first = false;
+            wt(qq.top());
+            qq.pop();
+        }
+    }
+
+    // set / multiset / unordered_set
+    template <class T>
+    void wt(const set<T> &s)
+    {
+        bool first = true;
+        for (auto &x : s)
+        {
+            if (!first)
+                cout << ' ';
+            first = false;
+            wt(x);
+        }
+    }
+    template <class T>
+    void wt(const multiset<T> &s)
+    {
+        bool first = true;
+        for (auto &x : s)
+        {
+            if (!first)
+                cout << ' ';
+            first = false;
+            wt(x);
+        }
+    }
+    template <class T>
+    void wt(const unordered_set<T> &s)
+    {
+        bool first = true;
+        for (auto &x : s)
+        {
+            if (!first)
+                cout << ' ';
+            first = false;
+            wt(x);
+        }
+    }
+
+    // map / unordered_map
+    template <class K, class V>
+    void wt(const map<K, V> &m)
+    {
+        bool first = true;
+        for (auto &kv : m)
+        {
+            if (!first)
+                cout << " | ";
+            first = false;
+            wt(kv.first);
+            cout << ':';
+            wt(kv.second);
+        }
+    }
+    template <class K, class V>
+    void wt(const unordered_map<K, V> &m)
+    {
+        bool first = true;
+        for (auto &kv : m)
+        {
+            if (!first)
+                cout << " | ";
+            first = false;
+            wt(kv.first);
+            cout << ':';
+            wt(kv.second);
+        }
+    }
+
+    // 出力本体
+    void print() { cout << '\n'; }
+
+    template <class Head, class... Tail>
+    void print(const Head &head, const Tail &...tail)
+    {
+        wt(head);
+        if (sizeof...(Tail))
+            cout << ' ';
+        print(tail...);
+    }
+} // namespace fastio
+
+// 頻出のI/O関数だけ名前空間から取り出す
+using fastio::print;
+using fastio::read;
+
+// 宣言+入力を1行で書くマクロ
+#define INT(...)     \
+    int __VA_ARGS__; \
+    read(__VA_ARGS__)
+#define LL(...)     \
+    ll __VA_ARGS__; \
+    read(__VA_ARGS__)
+#define U32(...)     \
+    u32 __VA_ARGS__; \
+    read(__VA_ARGS__)
+#define U64(...)     \
+    u64 __VA_ARGS__; \
+    read(__VA_ARGS__)
+#define STR(...)        \
+    string __VA_ARGS__; \
+    read(__VA_ARGS__)
+#define CHAR(...)     \
+    char __VA_ARGS__; \
+    read(__VA_ARGS__)
+#define DBL(...)        \
+    double __VA_ARGS__; \
+    read(__VA_ARGS__)
+#define VEC(type, name, size) \
+    vector<type> name(size);  \
+    read(name)
+#define VV(type, name, h, w)                       \
+    vector<vector<type>> name(h, vector<type>(w)); \
+    read(name)
+#define VEC0(type, name, size) \
+    vector<type> name(size)
+#define VV0(type, name, h, w) \
+    vector<vector<type>> name(h, vector<type>(w))
+#define VECI(type, name, size, init) \
+    vector<type> name(size, init)
+#define VVI(type, name, h, w, init) \
+    vector<vector<type>> name(h, vector<type>(w, init))
+
+// orderedコンテナ(set/multiset等)の境界検索ヘルパー
+// GE_IT(c, x): x以上の最小要素のiterator
+// LE_IT(c, x): x以下の最大要素のiterator（なければend）
+template <class C, class T>
+auto ge_it(const C &c, const T &x)
+{
+    return c.lower_bound(x);
+}
+
+template <class C, class T>
+auto le_it(const C &c, const T &x)
+{
+    auto it = c.upper_bound(x);
+    if (it == c.begin())
+        return c.end();
+    --it;
+    return it;
+}
+
+template <class C, class T>
+typename C::value_type ge_val(const C &c, const T &x)
+{
+    auto it = ge_it(c, x);
+    if (it == c.end())
+        throw out_of_range("GE_VAL: no element >= x");
+    return *it;
+}
+
+template <class C, class T>
+typename C::value_type le_val(const C &c, const T &x)
+{
+    auto it = le_it(c, x);
+    if (it == c.end())
+        throw out_of_range("LE_VAL: no element <= x");
+    return *it;
+}
+
+template <class T, class Compare, class Alloc>
+bool discard_one(set<T, Compare, Alloc> &s, const T &x)
+{
+    return s.erase(x) > 0;
+}
+
+template <class T, class Compare, class Alloc>
+bool discard_one(multiset<T, Compare, Alloc> &s, const T &x)
+{
+    auto it = s.find(x);
+    if (it == s.end())
+        return false;
+    s.erase(it); // erase only one
+    return true;
+}
+
+template <class T, class Compare, class Alloc>
+int discard_all(set<T, Compare, Alloc> &s, const T &x)
+{
+    return (int)s.erase(x); // 0 or 1
+}
+
+template <class T, class Compare, class Alloc>
+int discard_all(multiset<T, Compare, Alloc> &s, const T &x)
+{
+    return (int)s.erase(x); // remove all x
+}
+
+#define GE_IT(c, x) ge_it((c), (x))
+#define LE_IT(c, x) le_it((c), (x))
+#define GE_VAL(c, x) ge_val((c), (x))
+#define LE_VAL(c, x) le_val((c), (x))
+#define DISCARD_ONE(c, x) discard_one((c), (x))
+#define DISCARD_ALL(c, x) discard_all((c), (x))
+
+// std::setでPython風の集合演算を使うための演算子オーバーロード
+// A | B, A & B, A - B, A ^ B と代入版
+template <class T, class CompareA, class AllocA, class CompareB, class AllocB>
+set<T, CompareA, AllocA> operator|(const set<T, CompareA, AllocA> &a, const set<T, CompareB, AllocB> &b)
+{
+    set<T, CompareA, AllocA> res(a.begin(), a.end(), a.key_comp(), a.get_allocator());
+    res.insert(b.begin(), b.end());
+    return res;
+}
+
+template <class T, class CompareA, class AllocA, class CompareB, class AllocB>
+set<T, CompareA, AllocA> operator&(const set<T, CompareA, AllocA> &a, const set<T, CompareB, AllocB> &b)
+{
+    set<T, CompareA, AllocA> res(a.key_comp(), a.get_allocator());
+    for (const auto &x : a)
+    {
+        if (b.contains(x))
+            res.insert(x);
+    }
+    return res;
+}
+
+template <class T, class CompareA, class AllocA, class CompareB, class AllocB>
+set<T, CompareA, AllocA> operator-(const set<T, CompareA, AllocA> &a, const set<T, CompareB, AllocB> &b)
+{
+    set<T, CompareA, AllocA> res(a.key_comp(), a.get_allocator());
+    for (const auto &x : a)
+    {
+        if (!b.contains(x))
+            res.insert(x);
+    }
+    return res;
+}
+
+template <class T, class CompareA, class AllocA, class CompareB, class AllocB>
+set<T, CompareA, AllocA> operator^(const set<T, CompareA, AllocA> &a, const set<T, CompareB, AllocB> &b)
+{
+    set<T, CompareA, AllocA> res = a - b;
+    for (const auto &x : b)
+    {
+        if (!a.contains(x))
+            res.insert(x);
+    }
+    return res;
+}
+
+template <class T, class CompareA, class AllocA, class CompareB, class AllocB>
+set<T, CompareA, AllocA> &operator|=(set<T, CompareA, AllocA> &a, const set<T, CompareB, AllocB> &b)
+{
+    a = a | b;
+    return a;
+}
+
+template <class T, class CompareA, class AllocA, class CompareB, class AllocB>
+set<T, CompareA, AllocA> &operator&=(set<T, CompareA, AllocA> &a, const set<T, CompareB, AllocB> &b)
+{
+    a = a & b;
+    return a;
+}
+
+template <class T, class CompareA, class AllocA, class CompareB, class AllocB>
+set<T, CompareA, AllocA> &operator-=(set<T, CompareA, AllocA> &a, const set<T, CompareB, AllocB> &b)
+{
+    a = a - b;
+    return a;
+}
+
+template <class T, class CompareA, class AllocA, class CompareB, class AllocB>
+set<T, CompareA, AllocA> &operator^=(set<T, CompareA, AllocA> &a, const set<T, CompareB, AllocB> &b)
+{
+    a = a ^ b;
+    return a;
+}
+
+template <class T, class CompareA, class AllocA, class CompareB, class AllocB>
+bool is_subset(const set<T, CompareA, AllocA> &a, const set<T, CompareB, AllocB> &b)
+{
+    for (const auto &x : a)
+    {
+        if (!b.contains(x))
+            return false;
+    }
+    return true;
+}
+
+template <class T, class CompareA, class AllocA, class CompareB, class AllocB>
+bool is_superset(const set<T, CompareA, AllocA> &a, const set<T, CompareB, AllocB> &b)
+{
+    return is_subset(b, a);
+}
+
+template <class T, class CompareA, class AllocA, class CompareB, class AllocB>
+bool is_disjoint(const set<T, CompareA, AllocA> &a, const set<T, CompareB, AllocB> &b)
+{
+    for (const auto &x : a)
+    {
+        if (b.contains(x))
+            return false;
+    }
+    return true;
+}
+
+// 二分探索ヘルパー（Pythonのbisect相当）
+template <class T>
+int bisect_left(const vector<T> &v, const T &x)
+{
+    return int(lower_bound(v.begin(), v.end(), x) - v.begin());
+}
+
+template <class T>
+int bisect_right(const vector<T> &v, const T &x)
+{
+    return int(upper_bound(v.begin(), v.end(), x) - v.begin());
+}
+
+// 整数累乗（繰り返し二乗法）
+long long ipow(long long a, long long e)
+{
+    long long r = 1;
+    while (e > 0)
+    {
+        if (e & 1)
+            r *= a;
+        a *= a;
+        e >>= 1;
+    }
+    return r;
+}
+
+// 区切り文字付きjoinヘルパー
+template <class It>
+string join(It first, It last, const string &sep)
+{
+    ostringstream oss;
+    bool first_elem = true;
+    for (auto it = first; it != last; ++it)
+    {
+        if (!first_elem)
+            oss << sep;
+        first_elem = false;
+        oss << *it;
+    }
+    return oss.str();
+}
+
+inline string join(const vector<string> &v, const string &sep)
+{
+    size_t total = 0;
+    if (!v.empty())
+        total = (v.size() - 1) * sep.size();
+    for (const auto &s : v)
+        total += s.size();
+    string res;
+    res.reserve(total);
+    for (size_t i = 0; i < v.size(); ++i)
+    {
+        if (i)
+            res += sep;
+        res += v[i];
+    }
+    return res;
+}
+
+inline string join(const string &s, const string &sep)
+{
+    if (s.empty())
+        return "";
+    string res;
+    if (!sep.empty())
+        res.reserve(s.size() + (s.size() - 1) * sep.size());
+    for (size_t i = 0; i < s.size(); ++i)
+    {
+        if (i)
+            res += sep;
+        res += s[i];
+    }
+    return res;
+}
+
+template <class C>
+string join(const C &c, const string &sep)
+{
+    return join(c.begin(), c.end(), sep);
+}
+
+// 便利ユーティリティ（反転・合計・連結）
+template <class C>
+C reversed(C c)
+{
+    reverse(c.begin(), c.end());
+    return c;
+}
+
+template <class T>
+long long sum(const vector<T> &v)
+{
+    return accumulate(v.begin(), v.end(), 0LL);
+}
+
+template <class T, class AllocA, class AllocB>
+vector<T, AllocA> concat(const vector<T, AllocA> &a, const vector<T, AllocB> &b)
+{
+    vector<T, AllocA> res;
+    res.reserve(a.size() + b.size());
+    res.insert(res.end(), a.begin(), a.end());
+    res.insert(res.end(), b.begin(), b.end());
+    return res;
+}
+
+template <class T, class AllocA, class AllocB>
+vector<T, AllocA> operator+(const vector<T, AllocA> &a, const vector<T, AllocB> &b)
+{
+    return concat(a, b);
+}
+
+template <class T, class AllocA, class AllocB>
+vector<T, AllocA> &operator+=(vector<T, AllocA> &a, const vector<T, AllocB> &b)
+{
+    a.insert(a.end(), b.begin(), b.end());
+    return a;
+}
+
+template <class T, size_t N, size_t M>
+array<T, N + M> concat(const array<T, N> &a, const array<T, M> &b)
+{
+    array<T, N + M> res{};
+    copy(a.begin(), a.end(), res.begin());
+    copy(b.begin(), b.end(), res.begin() + N);
+    return res;
+}
+
+// 隣接リスト形式の軽量グラフ
+struct Graph
+{
+    int n;
+    vector<vector<int>> g;
+
+    Graph(int n = 0) : n(n), g(n) {}
+
+    void add_edge(int u, int v, bool undirected = true)
+    {
+        g[u].push_back(v);
+        if (undirected)
+            g[v].push_back(u);
+    }
+
+    vector<int> &operator[](int i) { return g[i]; }
+    const vector<int> &operator[](int i) const { return g[i]; }
+};
+
+class UnionFind
+{
+public:
+    // n要素のUnion-Findを作る（0-indexed）
+    UnionFind() = default;
+    explicit UnionFind(int n) : parent_or_size_(n, -1) {}
+
+    // xの根（代表）を返す（経路圧縮あり）
+    int find(int x)
+    {
+        if (parent_or_size_[x] < 0)
+            return x;
+        return parent_or_size_[x] = find(parent_or_size_[x]);
+    }
+
+    // aとbが同じ集合か
+    bool same(int a, int b)
+    {
+        return find(a) == find(b);
+    }
+
+    // aとbを併合する（既に同じならfalse）
+    bool unite(int a, int b)
+    {
+        a = find(a);
+        b = find(b);
+        if (a == b)
+            return false;
+        // union by size (negative size)
+        if (parent_or_size_[a] > parent_or_size_[b])
+            std::swap(a, b);
+        parent_or_size_[a] += parent_or_size_[b];
+        parent_or_size_[b] = a;
+        return true;
+    }
+
+    // xが属する集合のサイズ
+    int size(int x)
+    {
+        return -parent_or_size_[find(x)];
+    }
+
+    // 各連結成分の根（代表）を列挙する
+    std::vector<int> roots()
+    {
+        std::vector<int> res;
+        const int n = static_cast<int>(parent_or_size_.size());
+        res.reserve(n);
+        for (int i = 0; i < n; ++i)
+        {
+            if (find(i) == i)
+                res.push_back(i);
+        }
+        return res;
+    }
+
+    // 連結成分ごとの要素一覧を返す
+    std::vector<std::vector<int>> groups()
+    {
+        const int n = static_cast<int>(parent_or_size_.size());
+        std::vector<int> leader_buf(n), group_size(n);
+        for (int i = 0; i < n; ++i)
+        {
+            leader_buf[i] = find(i);
+            ++group_size[leader_buf[i]];
+        }
+
+        std::vector<std::vector<int>> result(n);
+        for (int i = 0; i < n; ++i)
+        {
+            result[i].reserve(group_size[i]);
+        }
+        for (int i = 0; i < n; ++i)
+        {
+            result[leader_buf[i]].push_back(i);
+        }
+
+        std::vector<std::vector<int>> res;
+        res.reserve(n);
+        for (int i = 0; i < n; ++i)
+        {
+            if (!result[i].empty())
+                res.push_back(std::move(result[i]));
+        }
+        return res;
+    }
+
+private:
+    std::vector<int> parent_or_size_;
+};
+
+int main()
+{
+    // ここにコードを書く
+    LL(n, m);
+    UnionFind uf(n);
+    Graph G(n);
+    ll ans = 0;
+    rep0(i, m)
+    {
+        LL(a, b);
+        G.add_edge(a - 1, b - 1);
+        uf.unite(a - 1, b - 1);
+    }
+    for (auto g : uf.groups())
+    {
+        // print(g);
+        ll now = 0;
+        for (ll v : g)
+        {
+            now += G[v].size();
+        }
+        now /= 2;
+        ans += ((g.size() - 1) * g.size()) / 2 - now;
+    }
+    print(ans);
+}
