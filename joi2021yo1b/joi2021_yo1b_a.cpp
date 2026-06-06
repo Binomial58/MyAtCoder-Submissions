@@ -767,66 +767,13 @@ struct WeightedGraph
 int main()
 {
     // ここにコードを書く
-    LL(n);
-    Graph G(n);
-    VEC0(ll, B, n);
-    rep0(i, n - 1)
+    LL(a, b, c);
+    if (a <= c && c < b)
     {
-        LL(b);
-        b--;
-        G.add_edge(b, i + 1);
-        B[b]++;
+        print(1);
     }
-    VECI(ll, D, n, -1);
-    D[0] = 0;
-    deque<ll> Q;
-    Q.push_back(0);
-    while (Q.size() != 0)
+    else
     {
-        ll q = Q.back();
-        Q.pop_back();
-        for (ll g : G[q])
-        {
-            if (D[g] == -1)
-            {
-                D[g] = D[q] + 1;
-                Q.push_back(g);
-            }
-        }
+        print(0);
     }
-    VECI(ll, S, n, 1);
-    VECI(ll, Max, n, 0);
-    VECI(ll, Min, n, INFLL);
-    // print(D);
-    rrep(i, MAX(D), -1)
-    {
-        // print(i);
-        rep0(j, n)
-        {
-            if (D[j] == i)
-            {
-                for (ll g : G[j])
-                {
-                    if (D[g] == i - 1)
-                    {
-                        Max[g] = max(Max[g], S[j]);
-                        Min[g] = min(Min[g], S[j]);
-                    }
-                }
-            }
-        }
-        rep0(j, n)
-        {
-            if (D[j] == i - 1 && B[j] != 0)
-            {
-                S[j] += Max[j] + Min[j];
-            }
-        }
-        // print(S);
-        // print(Max);
-        // print(Min);
-    }
-    print(S[0]);
-    // print(D);
-    // print(S);
 }
